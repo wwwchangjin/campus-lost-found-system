@@ -1,0 +1,58 @@
+@startuml
+left to right direction
+
+skinparam defaultFontName Noto Sans CJK SC
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam rectangleBorderColor #465671
+skinparam actorBorderColor #172B4D
+skinparam actorFontColor #172B4D
+skinparam usecaseBorderColor #385579
+skinparam usecaseBackgroundColor #EFF5FC
+skinparam usecaseFontColor #172B4D
+
+actor "失主" as Owner
+actor "拾得者" as Finder
+actor "暂存点工作人员" as Staff
+actor "系统管理人员" as Admin
+actor "外部消息服务" as Messaging
+
+rectangle "校园失物招领与暂存认领系统" {
+  usecase "UC-01 发布寻物信息" as UC01
+  usecase "UC-02 分类检索招领信息" as UC02
+  usecase "UC-03 查询暂存状态及领取指引" as UC03
+  usecase "UC-16 更新寻物信息及处理状态" as UC16
+  usecase "UC-04 发布拾物信息" as UC04
+  usecase "UC-07 登记与编号暂存物品" as UC07
+  usecase "UC-10 审核归属证据" as UC10
+  usecase "UC-11 确认交付并阻止重复领取" as UC11
+  usecase "UC-18 提交在线认领申请\n（待验证）" as UC18 #FFF4DB
+  usecase "UC-14 多人认领争议复核\n（待验证）" as UC14 #FFF4DB
+  usecase "UC-25 接入经授权的外部通知渠道\n（待验证）" as UC25 #FFF4DB
+}
+
+Owner -- UC01
+Owner -- UC02
+Owner -- UC03
+Owner -- UC16
+Owner -- UC18
+Owner -- UC25
+Finder -- UC04
+UC07 -- Staff
+UC10 -- Staff
+UC11 -- Staff
+UC14 -- Admin
+
+Finder .. UC07
+Owner .. UC10
+Owner .. UC11
+Owner .. UC14
+UC14 .. Staff
+UC18 .. Staff
+UC25 .. Messaging
+
+legend bottom
+  实线表示主参与关系，虚线表示次参与关系。
+endlegend
+@enduml
